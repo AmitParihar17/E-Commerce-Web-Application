@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
+import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
   const { productId } = useParams();
   // console.log(productId);
-  const { products, currency } = useContext(ShopContext);
+  const { products, currency ,addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const[size,setSize] = useState('')
@@ -83,7 +84,8 @@ const Product = () => {
             </div>
           </div>
 
-          <button className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer">
+          <button onClick={() => addToCart(productData._id,size)}
+           className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer">
             ADD TO CART
           </button>
           <hr className="mt-8 sm:w-4/5" />
@@ -114,6 +116,8 @@ const Product = () => {
           </p>
         </div>
       </div>
+      {/* Display related Projects */}
+              <RelatedProducts  category={productData.category}  subCategory={productData.subCategory}/>
     </div>
   ) : (
     <div className="opacity-0"></div>
