@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
         required : true,
     },
     bestSeller : {
-        type :  Bollean,
+        type :  Boolean,
         required : true,
     },
     date : {
