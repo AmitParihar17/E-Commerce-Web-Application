@@ -50,19 +50,44 @@ const addProduct = async(req,res) => {
 // function for listProducts
 
 const listProducts = async(req,res) => {
+    try {
+        const products = await productModel.find({})
+        res.status(200).json({success : true, message: "product fetch successfully",products })
+         
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success : false, message : error.message})
+        
+    }
 
 }
 
 // function for remove product
 
 const removeProducts = async(req,res) => {
-
+    try {
+           await productModel.findByIdAndDelete(req.body.id)
+           res.status(200).json({success : true,message : "Product remove successfully"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success : false ,message : error.message})
+    }
 }
 
 // function for single product info
 
 const singleProduct = async(req,res) => {
-
+    try {
+        const {productid} = req.body
+      const product =  await productModel.findById(productid)
+      if(!product){
+        return res.status(404).json({success : false ,message : "Product not found"})
+      }
+        res.status(200).json({success : true ,message : "Single Product fetch successfully",product})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success : false, message : error.message})
+    }
 }
 
 export {
